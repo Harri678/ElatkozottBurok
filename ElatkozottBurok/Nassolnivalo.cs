@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ElatkozottBurok
 {
@@ -13,7 +14,7 @@ namespace ElatkozottBurok
         {
             this.Nev = nev;
             this.KoffeinLoket = koffeinLoket;
-            this.StresszOldas = StresszOldas;
+            this.Stresszoldas = StresszOldas;
             this.Ar = ar;
         }
 
@@ -21,7 +22,7 @@ namespace ElatkozottBurok
             get => nev; 
             set 
             {
-                if(nev == "" || nev == null)
+                if(string.IsNullOrWhiteSpace(value))
                 {
                     nev = "Ismeretlen nassolnivaló";
                 }
@@ -32,8 +33,37 @@ namespace ElatkozottBurok
             }
         }
 
-        public int KoffeinLoket { get => koffeinLoket; set => koffeinLoket = value; }
-        public int Stresszoldas { get => StresszOldas; set => StresszOldas = value; }
-        public int Ar { get => ar; set => ar = value; }
+        public int KoffeinLoket { get => koffeinLoket; set 
+            {
+                if(value < 0)
+                {
+                    value = 0;
+                }
+                else if(value > 50)
+                {
+                    value = 50;
+                }
+                koffeinLoket = value;
+            }
+        }    
+        public int Stresszoldas { 
+            get => StresszOldas; 
+            set
+            {
+                if (value < 0)
+                {
+                    StresszOldas = 0;
+                }
+                else if (value > 100)
+                {
+                    StresszOldas = 100;
+                }
+                else
+                {
+                    StresszOldas = value;
+                }
+            }
+        }
+        public int Ar { get => ar; set { if (koffeinLoket >= 50) ar = value * 2; else ar = value; } }
     }
 }

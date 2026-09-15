@@ -69,18 +69,27 @@ namespace ElatkozottBurok.Tesztek
             Assert.That(dev.StresszSzint, Is.EqualTo(35)); // 20 + 15
         }
 
-        //[Test]
-        //public void Automata_KevesPenz_NemAdKiTermeket()
-        //{
-        //    var automata = new Automata();
-        //    automata.Feltolt(new List<Nassolnivalo> { new Nassolnivalo("Kávé", 20, 10, 300) });
-        //    var dev = new Fejleszto("Szegény Béla", Munkakor.Junior, 100, "Kávé");
+        [Test]
+        public void Automata_KevesPenz_NemAdKiTermeket()
+        {
+            List<Nassolnivalo> tesztNassok = new List<Nassolnivalo>
+            {
+                new Nassolnivalo("Espresso", 30, 5, 500),
+                new Nassolnivalo("Cappuccino", 25, 10, 650),
+                new Nassolnivalo("Energiaital", 50, 0, 700),
+                new Nassolnivalo("Zöld tea", 15, 20, 450),
+                new Nassolnivalo("Csokiszelet", 10, 15, 400),
+            };
 
-        //    var kapott = automata.Vasarlas("Kávé", dev);
+            var automata = new Automata(1000, tesztNassok, false);
+            automata.Feltolt(new List<Nassolnivalo> { new Nassolnivalo("Kávé", 20, 10, 300) });
+            var dev = new Fejleszto("Szegény Béla", Munkakor.Junior, 100, 10, 10, false, "Kávé");
 
-        //    Assert.That(kapott, Is.Null);
-        //    Assert.That(dev.Penz, Is.EqualTo(100));
-        //}
+            var kapott = automata.Vasarlas("Kávé", dev);
+
+            Assert.That(kapott, Is.Null);
+            Assert.That(dev.Penz, Is.EqualTo(100));
+        }
     }
 }
 

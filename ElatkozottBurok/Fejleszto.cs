@@ -145,16 +145,16 @@ namespace ElatkozottBurok
             if (elem == null)
                 return;
 
-            Koffeinszint += elem.KoffeinLoket;
 
             if (elem.Nev == KedvencSnack)
             {
                 StresszSzint -= elem.Stresszoldas * 2;
-                Koffeinszint += 5;
+                Koffeinszint += 5 + elem.KoffeinLoket;
             }
             else
             {
                 StresszSzint -= elem.Stresszoldas;
+                Koffeinszint += elem.KoffeinLoket;
             }
         }
     }
